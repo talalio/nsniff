@@ -18,8 +18,10 @@ void call_me(u_char *user, const struct pcap_pkthdr *pkthdr,
   packetd_ptr += link_hdr_length;
   struct ip *ip_hdr = (struct ip *)packetd_ptr;
 
-  char *packet_srcip = inet_ntoa(ip_hdr->ip_src);
-  char *packet_dstip = inet_ntoa(ip_hdr->ip_dst);
+  char packet_srcip[INET_ADDRSTRLEN]; 
+  char packet_dstip[INET_ADDRSTRLEN];           
+  strcpy(packet_srcip, inet_ntoa(ip_hdr->ip_src));
+  strcpy(packet_dstip, inet_ntoa(ip_hdr->ip_dst));
   int packet_id = ntohs(ip_hdr->ip_id), packet_ttl = ip_hdr->ip_ttl,
       packet_tos = ip_hdr->ip_tos, packet_len = ntohs(ip_hdr->ip_len),
       packet_hlen = ip_hdr->ip_hl;
